@@ -1,0 +1,75 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<%@ page import="java.sql.*" %>
+<%
+	Class.forName("com.mysql.jdbc.Driver");
+	Connection conn = null;
+	Statement stmt = null;
+	ResultSet rs = null;
+	
+	String num="", userid="", prodname="", groupname="", price="", amount="";
+	int count = 0;
+	
+	try {
+		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tabledb", "root", "1234");
+		stmt = conn.createStatement();
+		rs = stmt.executeQuery("select * from buytbl");
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>JSP를 이용한 Mysql연동</h1>
+<table border="1">
+	<tr>
+		<th>NUM</th>
+		<th>USERID</th>
+		<th>PRODNAME</th>
+		<th>GROUPNAME</th>
+		<th>PRICE</th>
+		<th>AMOUNT</th>
+	</tr>
+<%
+	if(rs != null) {
+		while(rs.next()) {
+			num = rs.getString("num");
+			userid = rs.getString("userid");
+			prodname = rs.getString("prodname");
+			groupname = rs.getString("groupname");
+			price = rs.getString("price");
+			amount = rs.getString("amount");
+%>
+	<tr>
+		<td><%=num %></td>
+		<td><%=userid %></td>
+		<td><%=prodname %></td>
+		<td><%=groupname %></td>
+		<td><%=price %></td>
+		<td><%=amount %></td>
+	</tr>
+<%
+		count++;
+		}
+	}
+%>
+</table><p>
+total records : <%=count %>
+<%
+	} catch(SQLException e) {
+		System.out.println("SQLException : " + e);
+	} catch(Exception e) {
+		System.out.println("SQLException : " + e);
+	} finally {
+		if(rs != null)
+			try { rs.close(); } catch(SQLException e) { }
+		if(stmt != null)
+			try { rs.close(); } catch(SQLException e) { }
+		if(conn != null)
+			try { rs.close(); } catch(SQLException e) { }
+	}
+%>
+</body>
+</html>

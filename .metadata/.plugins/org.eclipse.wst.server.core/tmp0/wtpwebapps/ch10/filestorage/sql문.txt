@@ -1,0 +1,30 @@
+- 검색 SQL문
+SELECT userID FROM usertbl;
+SELECT userID, NAME, height FROM usertbl;
+SELECT * FROM usertbl;
+SELECT mDate FROM usertbl WHERE userID = "KBS";  /* 문자형일때 */
+SELECT name FROM usertbl WHERE birthYear > 1980;  /* int형일때 */
+SELECT userID FROM usertbl WHERE NAME LIKE "김?";  /* ?는 글자 하나 */
+SELECT userID FROM usertbl WHERE NAME LIKE "김%";  /* '김'으로 시작하는 */
+SELECT userID FROM usertbl WHERE NAME LIKE "%수";   /* '수'로 끝나는 */
+SELECT userID FROM usertbl WHERE NAME LIKE "%김%";  /* 위치와 상관없이 '김'이 들어 있으면 */
+
+- 삽입문
+/* 컬럼의 순서대로 모두 다 삽입 시 */
+INSERT INTO usertbl VALUES("HGD", "홍길동", 1997, "인천", "010", "2348908", 167, "2021-08-25");
+/* 원하는 컬럼만 값을 넣을때 순서는 상관없이 내가 넣은 컬럼의 순서대로 */
+INSERT INTO usertbl(birthYear, addr, userID, NAME) VALUES(1995, "수원", "KKK", "김강기");
+
+- 수정
+/* 주의점은 반드시 WHERE절(조건절)을 넣어야 한다 그렇지 않으면 DB안의 모든값이 바뀐다 */
+/* 조건절에는 되도록 프라이머리키로 조건을 넣는다(중복된 데이터가 없도록) */
+UPDATE usertbl SET birthYear = 1991 WHERE userID = "KKH";
+UPDATE usertbl SET addr="부천", mobile1="010", mobile2="0987654" WHERE userID = "KKK";
+
+- 삭제
+/* 주의점은 반드시 WHERE절(조건절)을 넣어야 한다 그렇지 않으면 DB안의 모든값이 삭제됨 */
+DELETE FROM usertbl WHERE userID="KKK";
+DELETE FROM usertbl WHERE height > 180;
+
+
+
